@@ -5,6 +5,7 @@
     "build": "bun --version"
   },
   "dependencies": {
+    "@google/genai": "^1.29.0",
     "hono": "^4.10.3"
   },
   "devDependencies": {
