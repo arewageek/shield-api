@@ -51,8 +51,8 @@ export const interprete = async (prompt: string) => {
 
           Your only output must be valid JSON`,
       },
-    });
-    // console.log({ response, reply: response.text });
+    }
+    );
     return response;
   } catch (err: any) {
     console.log({ error: err.message });
