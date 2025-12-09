@@ -24,6 +24,9 @@ export const interprete = async (prompt: string) => {
         },
       ],
       config: {
+        thinkingConfig: {
+          thinkingBudget: 0
+        },
         systemInstruction: `You are "Shieldy", an AI assistant for Shield Token Bot.
 
           Your job is to take a user’s messy, unstructured post and extract the key information needed to deploy a charity token.
@@ -47,9 +50,9 @@ export const interprete = async (prompt: string) => {
           - If you detect the user is not trying to create a token, return: {"intent":"none"}
 
           For valid creation requests return:
-          {"intent":"create_token" | "none", "data": { ...fields... }, required: {...any of the above fields marked as required but missing a value}, message: {...(optional) only when you want to return a custom response or user's message to be sent back}}
+          {"intent":"create_token" | "none", "data": { ...fields... }, required: {...any of the above fields marked as required but missing a value}, message: {...(required) A custom response to be sent back. Always use a good response that will guide the user to complete the token creation process or help them understand what's going on and always format this response as markdown}
 
-          If the response does not sound like a token creation request, use "none" as the intent and add a custom message replying the user back. Always keep your messages simple and brief.
+          If the response does not sound like a token creation request, use "none" as the intent and add a custom message replying the user back.
 
           Your only output must be valid JSON`,
       },
