@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { LLMRoute } from './modules/llm/route'
 import { cors } from 'hono/cors'
+import { UserRoute } from './modules/user/route'
 
 const app = new Hono()
 
@@ -13,5 +14,6 @@ app.get('/', (c) => {
 })
 
 app.route("/llm", LLMRoute)
+app.route("/user", UserRoute)
 
 export default app
