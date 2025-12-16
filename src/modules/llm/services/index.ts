@@ -1,8 +1,8 @@
 import jsend = require("jsend")
-import { withGemini } from "./gemini"
+import { gemini } from "./gemini"
 
 export const translate = async (prompt: string) => {
-    const response = await withGemini(prompt)
+    const response = await gemini(prompt)
 
     try {
         if (!response || !response.text) return jsend.fail("Failed to generate response from AI")

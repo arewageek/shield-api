@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { interprete } from "./services/gemini";
 import { translate } from "./services";
+import { ContentfulStatusCode } from "hono/utils/http-status";
 
 const route = new Hono();
 
@@ -14,7 +14,7 @@ route.post("/prompt", async (c) => {
 
   const response = await translate(prompt);
 
-  return c.json(response, response.code || 200)
+  return c.json(response, response.code as ContentfulStatusCode)
 })
 
 export { route as LLMRoute };
