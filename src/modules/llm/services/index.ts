@@ -1,5 +1,6 @@
 import jsend = require("jsend")
 import { gemini } from "./gemini"
+import { GeminiResponse } from "../types"
 
 export const translate = async (prompt: string) => {
     const response = await gemini(prompt)
@@ -12,7 +13,7 @@ export const translate = async (prompt: string) => {
             .replace(/```\n?/g, "")
             .trim();
 
-        const parsedData = JSON.parse(cleanedText);
+        const parsedData: GeminiResponse = JSON.parse(cleanedText);
 
         return jsend.success({
             data: parsedData,
