@@ -11,7 +11,7 @@ route.post("/message", async c => {
     return c.json(response)
 })
 
-route.get("/messages/:user", async c => {
+route.get("/history/:user", async c => {
     const { user } = c.req.param();
 
     const response = await chat(user)

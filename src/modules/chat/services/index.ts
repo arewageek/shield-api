@@ -1,12 +1,13 @@
 import jsend = require("jsend");
 import { translate } from "../../llm/services";
 import connectDB from "../../../lib/mongodb";
-import Message from "../models/Chat";
+import Message from "../models/Message";
 import { GeminiResponse } from "../../llm/types";
 
 export const sendMessage = async (message: string, user: string) => {
     try {
-        if (!message || !user) throw new Error("No message or user provided")
+        if (!message) throw new Error("No message provided")
+        if (!user) throw new Error("No user provided")
 
         await saveMessage(message, user, "bot") //save user's message to db
 
@@ -15,7 +16,7 @@ export const sendMessage = async (message: string, user: string) => {
 
         await saveMessage(response.data.message ?? "", "bot", user) //save bot's response to db
 
-        return { translation: response }
+        return jsend.success(response)
     }
     catch (error: any) {
         console.error("Failed to send message :: ", error.message)
