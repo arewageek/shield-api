@@ -1,6 +1,7 @@
 {
   "name": "shields",
   "scripts": {
+    "start": "NODE_ENV=production BUN_WATCHER_DISABLE=1 bun run src/index.ts",
     "dev": "bun run --hot src/index.ts",
     "build": "bun --version"
   },
