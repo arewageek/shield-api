@@ -1,9 +1,11 @@
+import { ContextData } from "../../chat/types"
+
 type Intent = "token_creation" | "none"
 
 export interface GeminiResponse {
     data: {
         intent: Intent,
-        data: any,
+        data: ContextData,
         required?: string[],
         message: string,
     },

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { chat, sendMessage } from "./services";
+import { history, sendMessage } from "./services";
 
 const route = new Hono()
 
@@ -14,7 +14,7 @@ route.post("/message", async c => {
 route.get("/history/:user", async c => {
     const { user } = c.req.param();
 
-    const response = await chat(user)
+    const response = await history(user)
 
     return c.json(response)
 })

@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { ContextData } from "../../chat/types";
 
 let ai: GoogleGenAI | null = null;
 
@@ -10,7 +11,7 @@ function getAI() {
   return ai;
 }
 
-export const gemini = async (prompt: string) => {
+export const gemini = async (prompt: string, context?: ContextData) => {
   try {
     const response = await getAI().models.generateContent({
       model: "gemini-robotics-er-1.5-preview",
@@ -51,7 +52,11 @@ export const gemini = async (prompt: string) => {
 
           For valid creation requests return:
           {"intent":"create_token" | "none", "data": { ...fields... }, required: {...any of the above fields marked as required but missing a value}, message: {...(required) A custom response to be sent back. Always use a good response that will guide the user to complete the token creation process or help them understand what's going on and always format this response as markdown}
-
+          
+          For the token object (data), I want the response structured like this:
+          {token: {name: string, ticker: string, supply: number}, wallet: {charity: string, owner?: string, marketing?: string}, tax?: number}
+          If there's a missing required field, return it in the missing field. In your response, also include the fields provided in the context too. The prompt will always contain the context if the user has provided any previously, in your response, include the info in the context in the structure of the data object so that it can be attached in the next prompt
+          
           If the response does not sound like a token creation request, use "none" as the intent and add a custom message replying the user back.
 
           Your only output must be valid JSON`,
