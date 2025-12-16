@@ -10,7 +10,7 @@ function getAI() {
   return ai;
 }
 
-export const interprete = async (prompt: string) => {
+export const withGemini = async (prompt: string) => {
   try {
     const response = await getAI().models.generateContent({
       model: "gemini-robotics-er-1.5-preview",
