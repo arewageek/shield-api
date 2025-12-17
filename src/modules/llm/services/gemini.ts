@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { ContextData } from "../../chat/types";
+import { IMessage } from "../../chat/models/Message";
 
 let ai: GoogleGenAI | null = null;
 
@@ -11,10 +12,15 @@ function getAI() {
   return ai;
 }
 
-export const gemini = async (prompt: string, context?: ContextData) => {
+const models = {
+  robot: "gemini-robotics-er-1.5-preview",
+  gemma: "gemma-3-2b"
+}
+
+export const gemini = async (prompt: string, context?: ContextData, messagesContext?: IMessage[]) => {
   try {
     const response = await getAI().models.generateContent({
-      model: "gemini-robotics-er-1.5-preview",
+      model: models.robot,
       contents: [
         {
           parts: [
@@ -49,6 +55,7 @@ export const gemini = async (prompt: string, context?: ContextData) => {
           - If a field appears multiple times, choose the clearest, most complete value.
           - Never include comments, explanations, or extra text outside the JSON.
           - If you detect the user is not trying to create a token, return: {"intent":"none"}
+          - It's okay for a user to ask on your advice on the token creation process, always respond to their questions and guide them through the process but don't assist with requests that are not related to token creation. You may answer those but not assist them with advice on those that are not in any way directly related to the token creation process
 
           For valid creation requests return:
           {"intent":"create_token" | "none", "data": { ...fields... }, required: {...any of the above fields marked as required but missing a value}, message: {...(required) A custom response to be sent back. Always use a good response that will guide the user to complete the token creation process or help them understand what's going on and always format this response as markdown}
@@ -64,6 +71,9 @@ export const gemini = async (prompt: string, context?: ContextData) => {
           Here's the context of the information this user has provided from your previous conversations for the token creation, you can work with this to ensure they provided all needed pieces of information to facilitate the token creation process. Once all has been provided, you can return the response with the intent "create_token" and the data object containing the token information.
           
           Context: ${JSON.stringify(context)}
+
+          ${messagesContext && `Here's a context on your most recent conversations with the user in this chat session to help you quickly remember what you two have said to each other
+            MessageContext: ${JSON.stringify(messagesContext)}`}
           `,
       },
     }

@@ -2,9 +2,10 @@ import jsend = require("jsend")
 import { gemini } from "./gemini"
 import { GeminiResponse } from "../types"
 import { ContextData } from "../../chat/types"
+import { IMessage } from "../../chat/models/Message"
 
-export const translate = async (prompt: string, context?: ContextData) => {
-    const response = await gemini(prompt, context)
+export const translate = async (prompt: string, context?: ContextData, messagesContext?: IMessage[]) => {
+    const response = await gemini(prompt, context, messagesContext)
 
     try {
         if (!response || !response.text) return jsend.fail("Failed to generate response from AI")

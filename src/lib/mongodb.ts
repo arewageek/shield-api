@@ -22,20 +22,20 @@ if (!cached) {
 async function connectDB() {
     console.log("Connecting to db...")
 
-    if (cached.conn) {
-        return cached.conn
+    // if (cached.conn) {
+    //     return cached.conn
+    // }
+
+    // if (!cached.promise) {
+    const opts = {
+        bufferCommands: false,
     }
 
-    if (!cached.promise) {
-        const opts = {
-            bufferCommands: false,
-        }
-
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-            console.log('DB connected')
-            return mongoose
-        })
-    }
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+        console.log('DB connected')
+        return mongoose
+    })
+    // }
 
     try {
         cached.conn = await cached.promise
