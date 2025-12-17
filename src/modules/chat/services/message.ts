@@ -3,7 +3,7 @@ import { translate } from "../../llm/services";
 import connectDB from "../../../lib/mongodb";
 import Message from "../models/Message";
 import { GeminiResponse } from "../../llm/types";
-import { saveContext } from "./context";
+import { readContext, saveContext } from "./context";
 
 export const sendMessage = async (message: string, user: string) => {
     try {
@@ -12,7 +12,10 @@ export const sendMessage = async (message: string, user: string) => {
 
         await saveMessage(message, user, "bot") //save user's message to db
 
-        const translation = await translate(message);
+        // get previous context to be attached to new message
+        const context = await readContext(user)
+
+        const translation = await translate(message, context.data);
         const response: GeminiResponse = translation.data
 
         await saveContext(response.data.data, user)

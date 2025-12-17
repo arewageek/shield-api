@@ -19,4 +19,18 @@ export const saveContext = async (data: ContextData, user: string) => {
         console.log(error)
         return jsend.error(error.message)
     }
-} 
+}
+
+export const readContext = async (user: string) => {
+    try {
+        const context = await Context.find({ user }).sort({ updatedAt: -1 }).limit(1);
+
+        if (!context) return jsend.fail("No context found")
+
+        return jsend.success(context)
+    }
+    catch (error: any) {
+        console.error(error.message)
+        return jsend.error(error.message)
+    }
+}

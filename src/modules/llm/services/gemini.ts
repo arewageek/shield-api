@@ -59,7 +59,12 @@ export const gemini = async (prompt: string, context?: ContextData) => {
           
           If the response does not sound like a token creation request, use "none" as the intent and add a custom message replying the user back.
 
-          Your only output must be valid JSON`,
+          Your only output must be valid JSON.
+          
+          Here's the context of the information this user has provided from your previous conversations for the token creation, you can work with this to ensure they provided all needed pieces of information to facilitate the token creation process. Once all has been provided, you can return the response with the intent "create_token" and the data object containing the token information.
+          
+          Context: ${JSON.stringify(context)}
+          `,
       },
     }
     );
