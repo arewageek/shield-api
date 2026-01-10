@@ -10,7 +10,8 @@
     "@types/jsend": "^1.0.33",
     "hono": "^4.10.3",
     "jsend": "^1.1.0",
-    "mongoose": "^9.0.1"
+    "mongoose": "^9.0.1",
+    "viem": "^2.44.1"
   },
   "devDependencies": {
     "@types/bun": "latest"
