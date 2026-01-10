@@ -3,8 +3,9 @@ import factory from "./services";
 
 const route = new Hono();
 
-route.get("/test", async c => {
-    const {data} = await c.req.json()
+route.post("/test", async c => {
+    const data = await c.req.json()
+    console.log(data);
     if(!data){
         return c.json({error: "No data"}, 400)
     }
